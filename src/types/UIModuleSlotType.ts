@@ -1,1 +1,7 @@
-export type UIModuleSlotType = "file-tree" | "terminal" | "file-outline";
+export type UIModuleSlotType =
+  | "project-structure-tree"
+  | "terminal"
+  | "file-outline"
+  | "git-manager"
+  | "git-commit-timeline"
+  | "none";

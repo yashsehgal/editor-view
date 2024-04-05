@@ -4,6 +4,7 @@ import {
   ResizablePanelGroup,
 } from "../components/Resizable";
 import { EditorLayoutContextProvider } from "../providers/EditorLayoutContextProvider";
+import { EditorSidebar } from "./EditorSidebar";
 import { FileContentView } from "./FileContentView";
 import { UISlotBottomContainer } from "./UISlotBottomContainer";
 import { UISlotLeftContainer } from "./UISlotLeftContainer";
@@ -16,11 +17,15 @@ export default function EditorLayout() {
         direction="horizontal"
         className="EditorLayout-container"
       >
-        <ResizablePanel defaultSize={20}>
+        <ResizablePanel defaultSize={3} maxSize={3} minSize={3}>
+          <EditorSidebar />
+        </ResizablePanel>
+        <ResizableHandle />
+        <ResizablePanel defaultSize={17} minSize={10}>
           <UISlotLeftContainer />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel defaultSize={60}>
+        <ResizablePanel defaultSize={60} minSize={10}>
           <ResizablePanelGroup
             direction="vertical"
             className="EditorLayout-centerContainer h-full"
@@ -35,7 +40,7 @@ export default function EditorLayout() {
           </ResizablePanelGroup>
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel defaultSize={20}>
+        <ResizablePanel defaultSize={20} maxSize={20}>
           <UISlotRightContainer />
         </ResizablePanel>
       </ResizablePanelGroup>

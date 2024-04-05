@@ -51,15 +51,15 @@ export type EditorLayoutContextType = {
  * @default
  */
 export const EDITOR_LAYOUT_CONTEXT_INITIAL_STATE: EditorLayoutContextType = {
-  UISlotLeft: "file-tree",
+  UISlotLeft: "project-structure-tree",
   setUISlotLeft: () => {},
   UISlotLeftVisibility: true,
   setUISlotLeftVisibilty: () => {},
-  UISlotRight: "file-outline",
+  UISlotRight: "none",
   setUISlotRight: () => {},
   UISlotRightVisibility: false,
   setUISlotRightVisibilty: () => {},
-  UISlotBottom: "terminal",
+  UISlotBottom: "none",
   setUISlotBottom: () => {},
   UISlotBottomVisibility: false,
   setUISlotBottomVisibilty: () => {},
