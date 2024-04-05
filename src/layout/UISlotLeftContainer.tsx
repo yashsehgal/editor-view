@@ -9,7 +9,7 @@ export function UISlotLeftContainer({
 }: UISlotLeftContainerProps) {
   return (
     <aside
-      className={cn("UISlotLeftContainer-container", className)}
+      className={cn("UISlotLeftContainer-container w-full h-full", className)}
       {...args}
     />
   );

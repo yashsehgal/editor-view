@@ -9,7 +9,7 @@ export function UISlotBottomContainer({
 }: UISlotBottomContainerProps) {
   return (
     <div
-      className={cn("UISlotBottomContainer-container", className)}
+      className={cn("UISlotBottomContainer-container w-full h-full", className)}
       {...args}
     />
   );
