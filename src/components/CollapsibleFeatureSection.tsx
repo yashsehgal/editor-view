@@ -27,7 +27,10 @@ export function CollapsibleFeatureSection({
   const [collapsed, setCollapsed] = useState<boolean>(defaultOpen);
   return (
     <div
-      className={cn("CollapsibleFeatureSection-container grid", className)}
+      className={cn(
+        "CollapsibleFeatureSection-container flex flex-col h-full w-full",
+        className
+      )}
       {...args}
     >
       <div className="CollapsibleFeatureSection-button py-1 px-2 uppercase font-semibold text-xs bg-neutral-100 tracking-tight text-left border-b border-b-neutral-200 flex items-center justify-between">

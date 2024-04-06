@@ -89,17 +89,22 @@ export function ProjectStructureTree() {
         },
       ]}
     >
-      <ProjectFolderTree />
-      {showCreateNewFile ? (
-        <CreateNewFileInput handleCreateNewFile={handleCreateNewFile} />
-      ) : (
-        <></>
-      )}
-      {showCreateNewFolder ? (
-        <CreateNewFolderInput handleCreateNewFolder={handleCreateNewFolder} />
-      ) : (
-        <></>
-      )}
+      <div
+        className="ProjectStructureTree-container h-full"
+        onDoubleClick={() => setShowCreateNewFile(true)}
+      >
+        <ProjectFolderTree />
+        {showCreateNewFile ? (
+          <CreateNewFileInput handleCreateNewFile={handleCreateNewFile} />
+        ) : (
+          <></>
+        )}
+        {showCreateNewFolder ? (
+          <CreateNewFolderInput handleCreateNewFolder={handleCreateNewFolder} />
+        ) : (
+          <></>
+        )}
+      </div>
     </CollapsibleFeatureSection>
   );
 }
@@ -188,7 +193,7 @@ function ProjectFolderTree() {
   const { projectStructure } = useContext(ProjectStructureContext);
 
   return (
-    <div className="ProjectFolderTree-container gap-0.5">
+    <div className="ProjectFolderTree-container">
       {projectStructure.map((item, index) => {
         return (
           <ProjectFolderNode
