@@ -17,9 +17,32 @@ export function ProjectStructureTree() {
     setShowCreateNewFile(false);
 
     if (!newFileName) return;
-    let updatedProjectStructure = [...projectStructure];
-    updatedProjectStructure.push({ name: newFileName });
-    setProjectStructure(updatedProjectStructure);
+
+    if (newFileName.includes("/")) {
+      let updatedProjectStructure = [...projectStructure];
+      const pathSegments = newFileName.split("/");
+      const fileName = pathSegments.pop();
+      let currentFolder: { name: string; inner?: { name: string }[] }[] =
+        updatedProjectStructure;
+      for (const folderName of pathSegments) {
+        const folderIndex = currentFolder.findIndex(
+          (item) => item.name === folderName
+        );
+        if (folderIndex > -1) {
+          currentFolder = currentFolder[folderIndex].inner || [];
+        } else {
+          const newFolder = { name: folderName, inner: [] };
+          currentFolder.push(newFolder);
+          currentFolder = newFolder.inner;
+        }
+      }
+      currentFolder.push({ name: fileName! });
+      setProjectStructure(updatedProjectStructure);
+    } else {
+      let updatedProjectStructure = [...projectStructure];
+      updatedProjectStructure.push({ name: newFileName });
+      setProjectStructure(updatedProjectStructure);
+    }
   };
 
   return (
@@ -32,7 +55,6 @@ export function ProjectStructureTree() {
           icon: <IconFilePlus size={14} />,
         },
       ]}
-      defaultOpen
     >
       <ProjectFolderTree />
       {showCreateNewFile ? (
@@ -70,9 +92,14 @@ function CreateNewFileInput({
       </span>
       <input
         type="text"
-        className="CreateNewFileInput-input py-0.5 px-1 bg-transparent w-full"
+        className="CreateNewFileInput-input py-0.5 px-1 bg-transparent w-full tracking-tighter"
         onChange={(e) => setNewFileName(e.target.value as string)}
         onBlur={() => handleCreateNewFile(newFileName)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            handleCreateNewFile(newFileName);
+          }
+        }}
         autoFocus
       />
     </div>
@@ -97,7 +124,11 @@ function ProjectFolderTree() {
               y: 0,
             }}
           >
-            <ProjectFolderNode fileName={item.name} isFolder={!!item.inner} />
+            <ProjectFolderNode
+              fileName={item.name}
+              isFolder={!!item.inner}
+              innerFiles={item.inner || []}
+            />
           </motion.div>
         );
       })}
