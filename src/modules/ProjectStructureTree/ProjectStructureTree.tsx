@@ -8,8 +8,9 @@ import { FileIconType, getFileTypeIcon } from "../helpers/getFileTypeIcon";
 import { motion } from "framer-motion";
 
 export function ProjectStructureTree() {
-  const { projectName, setProjectName, projectStructure, setProjectStructure } =
-    useContext(ProjectStructureContext);
+  const { projectName, projectStructure, setProjectStructure } = useContext(
+    ProjectStructureContext
+  );
   const [showCreateNewFile, setShowCreateNewFile] = useState<boolean>(false);
 
   const handleCreateNewFile = (newFileName: string) => {
@@ -28,9 +29,10 @@ export function ProjectStructureTree() {
         {
           name: "Create New File",
           onClick: () => setShowCreateNewFile(true),
-          icon: <IconFilePlus size={16} />,
+          icon: <IconFilePlus size={14} />,
         },
       ]}
+      defaultOpen
     >
       <ProjectFolderTree />
       {showCreateNewFile ? (
@@ -78,9 +80,7 @@ function CreateNewFileInput({
 }
 
 function ProjectFolderTree() {
-  const { projectStructure, setProjectStructure } = useContext(
-    ProjectStructureContext
-  );
+  const { projectStructure } = useContext(ProjectStructureContext);
 
   return (
     <div className="ProjectFolderTree-container gap-0.5">

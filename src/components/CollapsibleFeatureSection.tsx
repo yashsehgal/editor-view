@@ -13,6 +13,7 @@ export interface CollapsibleFeatureSectionProps
   extends React.HTMLAttributes<HTMLDivElement> {
   sectionTitle: string;
   actions?: CollapsibleFeatureSectionActionType[];
+  defaultOpen?: boolean;
 }
 
 export function CollapsibleFeatureSection({
@@ -20,15 +21,16 @@ export function CollapsibleFeatureSection({
   children,
   sectionTitle,
   actions = [],
+  defaultOpen = false,
   ...args
 }: CollapsibleFeatureSectionProps) {
-  const [collapsed, setCollapsed] = useState<boolean>(false);
+  const [collapsed, setCollapsed] = useState<boolean>(defaultOpen);
   return (
     <div
       className={cn("CollapsibleFeatureSection-container grid", className)}
       {...args}
     >
-      <div className="CollapsibleFeatureSection-button py-1.5 px-2 uppercase font-semibold text-xs bg-neutral-100 tracking-tight text-left border-b border-b-neutral-200 flex items-center justify-between">
+      <div className="CollapsibleFeatureSection-button py-1 px-2 uppercase font-semibold text-xs bg-neutral-100 tracking-tight text-left border-b border-b-neutral-200 flex items-center justify-between">
         <div
           className="CollapsibleFeatureSection-sectionTitle-collapseIcon-wrapper flex items-center justify-start gap-1"
           onClick={() => setCollapsed(!collapsed)}
