@@ -90,7 +90,7 @@ function ProjectFolderTree() {
             key={`${item.name}-${index}`}
             initial={{
               opacity: 0,
-              x: -10 * (index + 1),
+              x: -6 * (index + 1),
             }}
             animate={{
               opacity: 1,
