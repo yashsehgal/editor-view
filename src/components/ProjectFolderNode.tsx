@@ -53,7 +53,7 @@ export function ProjectFolderNode({
       >
         <div
           className="ProjectFolderNode-fileName-iconContainer-wrapper flex gap-1.5 items-center justify-start"
-          style={{ paddingLeft: `${currentOrder}px` }}
+          style={{ marginLeft: `${currentOrder * 10}px` }}
         >
           <span className="ProjectFolderNode-iconContainer">
             {!isFolder ? (
@@ -87,7 +87,6 @@ export function ProjectFolderNode({
                 fileName={file.name}
                 isFolder={!!file.inner}
                 innerFiles={file.inner}
-                className="pl-4"
                 currentOrder={currentOrder + 2}
               />
             ))}

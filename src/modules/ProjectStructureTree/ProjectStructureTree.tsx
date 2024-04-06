@@ -191,23 +191,12 @@ function ProjectFolderTree() {
     <div className="ProjectFolderTree-container gap-0.5">
       {projectStructure.map((item, index) => {
         return (
-          <motion.div
+          <ProjectFolderNode
             key={`${item.name}-${index}`}
-            initial={{
-              opacity: 0,
-              y: -6 * (index + 1),
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-          >
-            <ProjectFolderNode
-              fileName={item.name}
-              isFolder={!!item.inner}
-              innerFiles={item.inner || []}
-            />
-          </motion.div>
+            fileName={item.name}
+            isFolder={!!item.inner}
+            innerFiles={item.inner || []}
+          />
         );
       })}
     </div>
