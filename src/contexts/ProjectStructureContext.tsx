@@ -2,7 +2,6 @@ import { createContext } from "react";
 
 export type ProjectStructureType = {
   name: string;
-  type: "folder" | "file";
   inner?: ProjectStructureType[];
 };
 
