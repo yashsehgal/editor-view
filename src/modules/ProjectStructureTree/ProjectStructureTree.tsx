@@ -90,11 +90,11 @@ function ProjectFolderTree() {
             key={`${item.name}-${index}`}
             initial={{
               opacity: 0,
-              x: -6 * (index + 1),
+              y: -6 * (index + 1),
             }}
             animate={{
               opacity: 1,
-              x: 0,
+              y: 0,
             }}
           >
             <ProjectFolderNode fileName={item.name} isFolder={!!item.inner} />
