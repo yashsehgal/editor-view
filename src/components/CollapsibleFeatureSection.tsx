@@ -49,7 +49,10 @@ export function CollapsibleFeatureSection({
             <button
               key={action.name}
               className="CollapsibleFeatureSection-actionButton p-1 hover:bg-neutral-200 rounded-md"
-              onClick={action.onClick}
+              onClick={() => {
+                setCollapsed(false);
+                action.onClick?.();
+              }}
               title={action.name}
             >
               {action.icon}
@@ -57,16 +60,7 @@ export function CollapsibleFeatureSection({
           ))}
         </div>
       </div>
-      {!collapsed && (
-        <motion.div
-          className="CollapsibleFeatureSection-content py-0"
-          initial={{ height: "auto" }}
-          animate={{ height: collapsed ? 0 : "auto" }}
-          transition={{ duration: 0.4 }}
-        >
-          {children}
-        </motion.div>
-      )}
+      {!collapsed ? children : <></>}
     </div>
   );
 }
