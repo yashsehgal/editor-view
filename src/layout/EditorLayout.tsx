@@ -13,7 +13,7 @@ import { getRenderForUISlot } from "./helpers/getRenderForUISlot";
 import { EditorLayoutContext } from "../contexts/EditorLayoutContext";
 
 export default function EditorLayout() {
-  const { UISlotLeft, UISlotRight, UISlotBottom } =
+  const { UISlotLeft, UISlotRight, UISlotBottom, FileContentViewState } =
     useContext(EditorLayoutContext);
 
   return (
@@ -37,7 +37,7 @@ export default function EditorLayout() {
           className="EditorLayout-centerContainer h-full"
         >
           <ResizablePanel defaultSize={70}>
-            <FileContentView />
+            <FileContentView view={FileContentViewState} />
           </ResizablePanel>
           <ResizableHandle />
           <ResizablePanel defaultSize={30}>

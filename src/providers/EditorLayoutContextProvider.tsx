@@ -4,6 +4,7 @@ import {
   EditorLayoutContext,
 } from "../contexts/EditorLayoutContext";
 import { UIModuleSlotType } from "../types/UIModuleSlotType";
+import { FileContentViewType } from "../layout/FileContentView";
 
 export interface EditorLayoutContextProviderProps {
   children?: React.ReactNode;
@@ -12,6 +13,10 @@ export interface EditorLayoutContextProviderProps {
 export function EditorLayoutContextProvider({
   children,
 }: EditorLayoutContextProviderProps) {
+  const [FileContentViewState, setFileContentViewState] =
+    useState<FileContentViewType>(
+      EDITOR_LAYOUT_CONTEXT_INITIAL_STATE.FileContentViewState
+    );
   const [UISlotLeft, setUISlotLeft] = useState<UIModuleSlotType>(
     EDITOR_LAYOUT_CONTEXT_INITIAL_STATE.UISlotLeft
   );
@@ -30,10 +35,17 @@ export function EditorLayoutContextProvider({
   const [UISlotBottomVisibility, setUISlotBottomVisibilty] = useState<boolean>(
     EDITOR_LAYOUT_CONTEXT_INITIAL_STATE.UISlotBottomVisibility
   );
+  const [selectedFileID, setSelectedFileID] = useState<string | null>(
+    EDITOR_LAYOUT_CONTEXT_INITIAL_STATE.selectedFileID
+  );
 
   return (
     <EditorLayoutContext.Provider
       value={{
+        FileContentViewState,
+        setFileContentViewState,
+        selectedFileID,
+        setSelectedFileID,
         UISlotLeft,
         setUISlotLeft,
         UISlotLeftVisibility,

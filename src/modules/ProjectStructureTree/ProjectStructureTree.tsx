@@ -1,16 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import { CollapsibleFeatureSection } from "../../components/CollapsibleFeatureSection";
-import { ProjectStructureContext } from "../../contexts/ProjectStructureContext";
+import {
+  ProjectStructureContext,
+  ProjectStructureType,
+} from "../../contexts/ProjectStructureContext";
 import { ProjectFolderNode } from "../../components/ProjectFolderNode";
 import { IconFilePlus, IconFolderPlus, IconFolder } from "@tabler/icons-react";
 import { cn } from "../../dev-utils/cn";
 import { FileIconType, getFileTypeIcon } from "../helpers/getFileTypeIcon";
-import { motion } from "framer-motion";
+import { EditorLayoutContext } from "../../contexts/EditorLayoutContext";
 
 export function ProjectStructureTree() {
   const { projectName, projectStructure, setProjectStructure } = useContext(
     ProjectStructureContext
   );
+  const { setSelectedFileID } = useContext(EditorLayoutContext);
   const [showCreateNewFile, setShowCreateNewFile] = useState<boolean>(false);
   const [showCreateNewFolder, setShowCreateNewFolder] =
     useState<boolean>(false);
@@ -24,8 +28,7 @@ export function ProjectStructureTree() {
       let updatedProjectStructure = [...projectStructure];
       const pathSegments = newFileName.split("/");
       const fileName = pathSegments.pop();
-      let currentFolder: { name: string; inner?: { name: string }[] }[] =
-        updatedProjectStructure;
+      let currentFolder: ProjectStructureType[] = updatedProjectStructure;
       for (const folderName of pathSegments) {
         const folderIndex = currentFolder.findIndex(
           (item) => item.name === folderName
@@ -33,17 +36,30 @@ export function ProjectStructureTree() {
         if (folderIndex > -1) {
           currentFolder = currentFolder[folderIndex].inner || [];
         } else {
-          const newFolder = { name: folderName, inner: [] };
+          const newFolder = {
+            name: folderName,
+            inner: [],
+            content: "" as string,
+            fileID: btoa(`${newFileName}-${Date.now()}`) as string,
+          };
           currentFolder.push(newFolder);
           currentFolder = newFolder.inner;
         }
       }
-      currentFolder.push({ name: fileName! });
+      currentFolder.push({
+        name: fileName!,
+        fileID: btoa(`${newFileName}-${Date.now()}`) as string,
+      });
       setProjectStructure(updatedProjectStructure);
     } else {
       let updatedProjectStructure = [...projectStructure];
-      updatedProjectStructure.push({ name: newFileName });
+      updatedProjectStructure.push({
+        name: newFileName,
+        content: "" as string,
+        fileID: btoa(`${newFileName}-${Date.now()}`),
+      });
       setProjectStructure(updatedProjectStructure);
+      setSelectedFileID(updatedProjectStructure.slice(-1)[0].fileID);
     }
   };
 
@@ -55,21 +71,31 @@ export function ProjectStructureTree() {
     let updatedProjectStructure = [...projectStructure];
     const pathSegments = newFolderName.split("/");
     const fileName = pathSegments.pop();
-    let currentFolder: { name: string; inner?: { name: string }[] }[] =
-      updatedProjectStructure;
+    let currentFolder: ProjectStructureType[] = updatedProjectStructure;
     for (const folderName of pathSegments) {
       const folderIndex = currentFolder.findIndex(
         (item) => item.name === folderName
       );
       if (folderIndex > -1) {
         currentFolder = currentFolder[folderIndex].inner || [];
+        currentFolder[folderIndex].fileID = btoa(
+          `${fileName}-${Date.now()}`
+        ) as string;
       } else {
-        const newFolder = { name: folderName, inner: [] };
+        const newFolder = {
+          name: folderName,
+          inner: [],
+          fileID: btoa(`${fileName}-${Date.now()}`) as string,
+        };
         currentFolder.push(newFolder);
         currentFolder = newFolder.inner;
       }
     }
-    currentFolder.push({ name: fileName!, inner: [] });
+    currentFolder.push({
+      name: fileName!,
+      inner: [],
+      fileID: btoa(`${fileName}-${Date.now()}`) as string,
+    });
     setProjectStructure(updatedProjectStructure);
   };
 
@@ -201,6 +227,7 @@ function ProjectFolderTree() {
             fileName={item.name}
             isFolder={!!item.inner}
             innerFiles={item.inner || []}
+            fileID={item.fileID}
           />
         );
       })}
