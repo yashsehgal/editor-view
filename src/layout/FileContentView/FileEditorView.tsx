@@ -31,7 +31,7 @@ export function FileEditorView() {
   };
 
   return (
-    <div className="FileEditorView-container h-full w-full">
+    <div className="FileEditorView-container h-full w-full pt-2">
       <CodeEditorWithSyntaxHighlighter
         content={
           getSelectedFileIDContent({
