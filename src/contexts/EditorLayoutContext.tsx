@@ -1,5 +1,6 @@
 import { createContext } from "react";
 import { UIModuleSlotType } from "../types/UIModuleSlotType";
+import { FileContentViewType } from "../layout/FileContentView";
 
 /**
  * EditorLayoutContextType is the type for the EditorLayoutContext
@@ -16,8 +17,18 @@ import { UIModuleSlotType } from "../types/UIModuleSlotType";
  * @property {Function} setUISlotBottom - Function to set the slot state for UISlotBottom
  * @property {boolean} UISlotBottomVisibility - Slot visibility state for UISlotBottom
  * @property {Function} setUISlotBottomVisibilty - Function to set the visibility state for UISlotBottom
+ * @property {string | null} selectedFileID - File ID of the selected file
+ * @property {Function} setSelectedFileID - Function to set the file ID of the selected file
  */
 export type EditorLayoutContextType = {
+  // State for the FileContentView
+  FileContentViewState: FileContentViewType;
+  // Function to set the FileContentView state
+  setFileContentViewState: (view: FileContentViewType) => void;
+  // File ID of the selected file
+  selectedFileID: string | null;
+  // Function to set the file ID of the selected file
+  setSelectedFileID: (fileID: string) => void;
   // Slot state for UISlotLeft
   UISlotLeft: UIModuleSlotType;
   // Function to set the slot state for UISlotLeft
@@ -51,6 +62,10 @@ export type EditorLayoutContextType = {
  * @default
  */
 export const EDITOR_LAYOUT_CONTEXT_INITIAL_STATE: EditorLayoutContextType = {
+  FileContentViewState: "file-readonly",
+  setFileContentViewState: () => {},
+  selectedFileID: null,
+  setSelectedFileID: () => {},
   UISlotLeft: "project-structure-tree",
   setUISlotLeft: () => {},
   UISlotLeftVisibility: true,

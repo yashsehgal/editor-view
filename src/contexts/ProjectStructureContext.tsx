@@ -1,7 +1,9 @@
 import { createContext } from "react";
 
 export type ProjectStructureType = {
+  fileID: string;
   name: string;
+  content?: string;
   inner?: ProjectStructureType[];
 };
 
