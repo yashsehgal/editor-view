@@ -6,6 +6,7 @@ import {
   ProjectStructureType,
 } from "../../contexts/ProjectStructureContext";
 import { CodeEditorWithSyntaxHighlighter } from "../../components/CodeEditorWithSyntaxHighlighter";
+import { FileFormatType } from "../../types/FileFormatType";
 
 export interface FileEditorViewProps
   extends React.HTMLAttributes<HTMLDivElement> {}
@@ -40,6 +41,12 @@ export function FileEditorView() {
           })?.content || ""
         }
         setContent={handleContentChangeForFileID}
+        language={
+          getSelectedFileIDContent({
+            fileID: selectedFileID as string,
+            projectStructure: projectStructure as ProjectStructureType[],
+          })?.language as FileFormatType
+        }
       />
     </div>
   );

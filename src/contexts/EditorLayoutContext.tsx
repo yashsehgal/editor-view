@@ -21,7 +21,9 @@ import { FileContentViewType } from "../layout/FileContentView";
  * @property {Function} setSelectedFileID - Function to set the file ID of the selected file
  */
 export type EditorLayoutContextType = {
+  // State for the FileContentView
   FileContentViewState: FileContentViewType;
+  // Function to set the FileContentView state
   setFileContentViewState: (view: FileContentViewType) => void;
   // File ID of the selected file
   selectedFileID: string | null;

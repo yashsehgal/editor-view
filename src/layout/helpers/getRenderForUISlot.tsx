@@ -6,13 +6,17 @@ export function getRenderForUISlot(slot: UIModuleSlotType) {
     case "project-structure-tree":
       return <ProjectStructureTree />;
     case "terminal":
-    //   return import("../../modules/Terminal");
+      //   return import("../../modules/Terminal");
+      break;
     case "file-outline":
-    //   return import("../../modules/FileOutline");
+      //   return import("../../modules/FileOutline");
+      break;
     case "git-manager":
-    //   return import("../../modules/GitManager");
+      //   return import("../../modules/GitManager");
+      break;
     case "git-commit-timeline":
-    //   return import("../../modules/GitCommitTimeline");
+      //   return import("../../modules/GitCommitTimeline");
+      break;
     case "none":
       return <></>;
   }

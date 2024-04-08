@@ -39,7 +39,7 @@ export function ProjectFolderNode({
         setExtension(ext as FileIconType);
       }
     }
-  }, [fileName]);
+  }, [fileName, isFolder]);
 
   return (
     <>
