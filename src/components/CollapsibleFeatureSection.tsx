@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { cn } from "../dev-utils/cn";
 import { IconChevronDown } from "@tabler/icons-react";
-import { motion } from "framer-motion";
 
 export type CollapsibleFeatureSectionActionType = {
   name: string;

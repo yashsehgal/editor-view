@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { cn } from "../dev-utils/cn";
 import {
   FileIconType,
@@ -7,6 +7,7 @@ import {
 
 import { IconFolderFilled, IconChevronDown } from "@tabler/icons-react";
 import { ProjectStructureType } from "../contexts/ProjectStructureContext";
+import { EditorLayoutContext } from "../contexts/EditorLayoutContext";
 
 export interface ProjectFolderNodeProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,18 +15,22 @@ export interface ProjectFolderNodeProps
   isFolder?: boolean;
   innerFiles?: ProjectStructureType[];
   currentOrder?: number;
+  fileID: string;
 }
 
 export function ProjectFolderNode({
   className,
   isFolder = false,
   fileName,
+  fileID,
   innerFiles = [],
   currentOrder = 0,
   ...args
 }: ProjectFolderNodeProps) {
   const [extenstion, setExtension] = useState<string | null>(null);
   const [isFolderCollapsed, setIsFolderCollapsed] = useState<boolean>(false);
+
+  const { selectedFileID, setSelectedFileID } = useContext(EditorLayoutContext);
 
   useEffect(() => {
     if (!isFolder) {
@@ -34,7 +39,7 @@ export function ProjectFolderNode({
         setExtension(ext as FileIconType);
       }
     }
-  }, [fileName]);
+  }, [fileName, isFolder]);
 
   return (
     <>
@@ -47,6 +52,10 @@ export function ProjectFolderNode({
         onClick={() => {
           if (isFolder) {
             setIsFolderCollapsed(!isFolderCollapsed);
+          } else if (!isFolder) {
+            if (fileID !== selectedFileID) {
+              setSelectedFileID(fileID);
+            }
           }
         }}
         {...args}
@@ -87,6 +96,7 @@ export function ProjectFolderNode({
                 fileName={file.name}
                 isFolder={!!file.inner}
                 innerFiles={file.inner}
+                fileID={file.fileID}
                 currentOrder={currentOrder + 2}
               />
             ))}
