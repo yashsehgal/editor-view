@@ -18,7 +18,7 @@ export function CodeEditorWithSyntaxHighlighter({
       defaultLanguage={language}
       language={language}
       value={content}
-      onChange={(value, e) => setContent(value as string)}
+      onChange={(value, _e) => setContent(value as string)}
     />
   );
 }

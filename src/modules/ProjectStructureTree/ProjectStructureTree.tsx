@@ -10,6 +10,8 @@ import { cn } from "../../dev-utils/cn";
 import { FileIconType, getFileTypeIcon } from "../helpers/getFileTypeIcon";
 import { EditorLayoutContext } from "../../contexts/EditorLayoutContext";
 
+import { v4 as uuidv4 } from "uuid";
+
 export function ProjectStructureTree() {
   const { projectName, projectStructure, setProjectStructure } = useContext(
     ProjectStructureContext
@@ -28,6 +30,18 @@ export function ProjectStructureTree() {
       let updatedProjectStructure = [...projectStructure];
       const pathSegments = newFileName.split("/");
       const fileName = pathSegments.pop();
+
+      // Check if the input is something like "components/"
+      if (!fileName) {
+        updatedProjectStructure.push({
+          name: pathSegments[0],
+          content: "",
+          fileID: uuidv4() as string,
+        });
+        setProjectStructure(updatedProjectStructure);
+        return;
+      }
+
       let currentFolder: ProjectStructureType[] = updatedProjectStructure;
       for (const folderName of pathSegments) {
         const folderIndex = currentFolder.findIndex(
@@ -39,8 +53,8 @@ export function ProjectStructureTree() {
           const newFolder = {
             name: folderName,
             inner: [],
-            content: "" as string,
-            fileID: btoa(`${newFileName}-${Date.now()}`) as string,
+            content: "",
+            fileID: uuidv4() as string,
           };
           currentFolder.push(newFolder);
           currentFolder = newFolder.inner;
@@ -48,15 +62,15 @@ export function ProjectStructureTree() {
       }
       currentFolder.push({
         name: fileName!,
-        fileID: btoa(`${newFileName}-${Date.now()}`) as string,
+        fileID: uuidv4() as string,
       });
       setProjectStructure(updatedProjectStructure);
     } else {
       let updatedProjectStructure = [...projectStructure];
       updatedProjectStructure.push({
         name: newFileName,
-        content: "" as string,
-        fileID: btoa(`${newFileName}-${Date.now()}`),
+        content: "",
+        fileID: uuidv4() as string,
       });
       setProjectStructure(updatedProjectStructure);
       setSelectedFileID(updatedProjectStructure.slice(-1)[0].fileID);
@@ -66,36 +80,35 @@ export function ProjectStructureTree() {
   const handleCreateNewFolder = (newFolderName: string) => {
     setShowCreateNewFolder(false);
 
-    if (!newFolderName) return;
+    if (!newFolderName || newFolderName.trim() === "") return;
 
     let updatedProjectStructure = [...projectStructure];
-    const pathSegments = newFolderName.split("/");
-    const fileName = pathSegments.pop();
+    const pathSegments = newFolderName.split("/").filter(Boolean); // Filter out empty segments
+    const folderName = pathSegments.pop();
     let currentFolder: ProjectStructureType[] = updatedProjectStructure;
-    for (const folderName of pathSegments) {
+    for (const segment of pathSegments) {
       const folderIndex = currentFolder.findIndex(
-        (item) => item.name === folderName
+        (item) => item.name === segment
       );
       if (folderIndex > -1) {
         currentFolder = currentFolder[folderIndex].inner || [];
-        currentFolder[folderIndex].fileID = btoa(
-          `${fileName}-${Date.now()}`
-        ) as string;
       } else {
         const newFolder = {
-          name: folderName,
+          name: segment,
           inner: [],
-          fileID: btoa(`${fileName}-${Date.now()}`) as string,
+          fileID: uuidv4() as string,
         };
         currentFolder.push(newFolder);
         currentFolder = newFolder.inner;
       }
     }
-    currentFolder.push({
-      name: fileName!,
-      inner: [],
-      fileID: btoa(`${fileName}-${Date.now()}`) as string,
-    });
+    if (folderName) {
+      currentFolder.push({
+        name: folderName,
+        inner: [],
+        fileID: uuidv4() as string,
+      });
+    }
     setProjectStructure(updatedProjectStructure);
   };
 

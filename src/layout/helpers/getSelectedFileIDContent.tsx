@@ -39,9 +39,6 @@ export function getFileFormat(fileName: string): FileFormatType {
     case "jsx":
       return FileFormatType.jsx;
     case "tsx":
-      console.log(
-        "rendering file content in typescript format (for .tsx file)"
-      );
       return FileFormatType.tsx;
     case "html":
       return FileFormatType.html;
