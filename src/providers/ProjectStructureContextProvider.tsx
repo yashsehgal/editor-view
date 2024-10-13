@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   PROJECT_STRUCTURE_CONTEXT_INITIAL_STATE,
   ProjectStructureContext,
@@ -18,6 +18,14 @@ export function ProjectStructureContextProvider({
   const [projectStructure, setProjectStructure] = useState<
     ProjectStructureType[]
   >(PROJECT_STRUCTURE_CONTEXT_INITIAL_STATE.projectStructure);
+
+  useEffect(() => {
+    console.log("ProjectStructureContextProvider", {
+      projectName,
+      projectStructure,
+    });
+  }, [projectName, projectStructure, setProjectName, setProjectStructure]);
+
   return (
     <ProjectStructureContext.Provider
       value={{
