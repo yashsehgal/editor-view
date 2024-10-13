@@ -78,7 +78,7 @@ export const EDITOR_LAYOUT_CONTEXT_INITIAL_STATE: EditorLayoutContextType = {
   setUISlotBottom: () => {},
   UISlotBottomVisibility: false,
   setUISlotBottomVisibilty: () => {},
-};
+} satisfies EditorLayoutContextType;
 
 export const EditorLayoutContext = createContext<EditorLayoutContextType>({
   ...EDITOR_LAYOUT_CONTEXT_INITIAL_STATE,
