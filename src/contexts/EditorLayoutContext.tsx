@@ -19,6 +19,10 @@ import { FileContentViewType } from "../layout/FileContentView";
  * @property {Function} setUISlotBottomVisibilty - Function to set the visibility state for UISlotBottom
  * @property {string | null} selectedFileID - File ID of the selected file
  * @property {Function} setSelectedFileID - Function to set the file ID of the selected file
+ * @property {FileContentViewType} FileContentViewState - State for the FileContentView
+ * @property {Function} setFileContentViewState - Function to set the FileContentView state
+ * @property {string[]} UIOpenEditorTabs - Open editor tabs
+ * @property {Function} setUIOpenEditorTabs - Function to set the open editor tabs
  */
 export type EditorLayoutContextType = {
   // State for the FileContentView
@@ -53,6 +57,10 @@ export type EditorLayoutContextType = {
   UISlotBottomVisibility: boolean;
   // Function to set the visibility state for UISlotBottom
   setUISlotBottomVisibilty: (visible: boolean) => void;
+  // Open editor tabs
+  UIOpenEditorTabs: string[];
+  // Function to set the open editor tabs
+  setUIOpenEditorTabs: (tabs: string[]) => void;
 };
 
 /**
@@ -78,6 +86,8 @@ export const EDITOR_LAYOUT_CONTEXT_INITIAL_STATE: EditorLayoutContextType = {
   setUISlotBottom: () => {},
   UISlotBottomVisibility: false,
   setUISlotBottomVisibilty: () => {},
+  UIOpenEditorTabs: [],
+  setUIOpenEditorTabs: () => {},
 } satisfies EditorLayoutContextType;
 
 export const EditorLayoutContext = createContext<EditorLayoutContextType>({

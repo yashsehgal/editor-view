@@ -38,6 +38,9 @@ export function EditorLayoutContextProvider({
   const [selectedFileID, setSelectedFileID] = useState<string | null>(
     EDITOR_LAYOUT_CONTEXT_INITIAL_STATE.selectedFileID
   );
+  const [UIOpenEditorTabs, setUIOpenEditorTabs] = useState<string[]>(
+    EDITOR_LAYOUT_CONTEXT_INITIAL_STATE.UIOpenEditorTabs
+  );
 
   return (
     <EditorLayoutContext.Provider
@@ -58,6 +61,8 @@ export function EditorLayoutContextProvider({
         setUISlotBottom,
         UISlotBottomVisibility,
         setUISlotBottomVisibilty,
+        UIOpenEditorTabs,
+        setUIOpenEditorTabs,
       }}
     >
       {children}

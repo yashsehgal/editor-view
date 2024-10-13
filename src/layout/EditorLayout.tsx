@@ -11,10 +11,14 @@ import { UISlotLeftContainer } from "./UISlotLeftContainer";
 import { UISlotRightContainer } from "./UISlotRightContainer";
 import { getRenderForUISlot } from "./helpers/getRenderForUISlot";
 import { EditorLayoutContext } from "../contexts/EditorLayoutContext";
+import { OpenEditors } from "./OpenEditors";
+import { ProjectStructureContext } from "../contexts/ProjectStructureContext";
 
 export default function EditorLayout() {
   const { UISlotLeft, UISlotRight, UISlotBottom, FileContentViewState } =
     useContext(EditorLayoutContext);
+
+  const { projectStructure } = useContext(ProjectStructureContext);
 
   return (
     <ResizablePanelGroup
@@ -37,6 +41,7 @@ export default function EditorLayout() {
           className="EditorLayout-centerContainer h-full"
         >
           <ResizablePanel defaultSize={70}>
+            <OpenEditors tabs={projectStructure} />
             <FileContentView view={FileContentViewState} />
           </ResizablePanel>
           <ResizableHandle />
